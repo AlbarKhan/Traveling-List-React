@@ -11,13 +11,18 @@ const initialItems = [
 export default function App() {
   const [items, setItem] = useState([]);
   function handleAddItems(item) {
+    console.log(items);
     setItem((items) => [...items, item]);
+  }
+
+  function handleDelete(id) {
+    setItem((items) => items.filter((item) => item.id !== id));
   }
   return (
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} />
+      <PackingList items={items} onDelete={handleDelete} />
       <Stats />
     </div>
   );
@@ -65,26 +70,33 @@ function Form({ onAddItems }) {
   );
 }
 
-function PackingList({ items }) {
+function PackingList({ items, onDelete }) {
   return (
     <div className="list">
       <ul>
-        {items.map((item) => (
-          <Item item={item} key={item.id} />
+        {items.map((item, index) => (
+          <Item item={item} key={item.id} onDelete={onDelete} />
         ))}
       </ul>
     </div>
   );
 }
 
-function Item({ item }) {
+function Item({ item, onDelete }) {
   // console.log(item.description);
   return (
     <li>
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.description}
       </span>
-      <button style={{ color: "red" }}>X</button>
+      <button
+        style={{ color: "red" }}
+        onClick={() => {
+          onDelete(item.id);
+        }}
+      >
+        X
+      </button>
     </li>
   );
 }
