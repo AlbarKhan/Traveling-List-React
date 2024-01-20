@@ -12,7 +12,7 @@ export default function App() {
   const [items, setItem] = useState(initialItems);
   // const [editCheck, setEditCheck] = useState(false);
   function handleAddItems(item) {
-    items.map((item) => console.log(item));
+    // items.map((item) => console.log(item));
     setItem((items) => [...items, item]);
   }
 
@@ -44,6 +44,7 @@ export default function App() {
 function Logo() {
   return <h1>⛰️Traveling Items List🛣️</h1>;
 }
+
 function Form({ onAddItems }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
